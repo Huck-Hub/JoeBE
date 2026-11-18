@@ -1,6 +1,16 @@
 var express = require("express"); // Requires the Express module
 var cors = require("cors");
 var path = require("path");
+require("dotenv").config({ path: "./config.env" });
+
+// MongoDB connection setup (using native MongoDB Node.js driver only)
+const { MongoClient, ObjectId } = require("mongodb");
+const uri = process.env.MONGODB_PREFIX +
+    process.env.MONGODB_USERNAME + ":" +
+    process.env.MONGODB_PASSWORD +
+    process.env.MONGODB_URL;
+const client = new MongoClient(uri);
+const db = client.db(process.env.MONGODB_DB || "AfterSchool");
 
 // Calls the express function to start a new Express application
 var app = express();
@@ -23,123 +33,19 @@ app.use("/images", function(request, response) {
     response.status(404).send("Image not found!");
 });
 
-let lessonsArray = [
-    {
-        id: 1001,
-        subject: "Math",
-        location: "Hendon",
-        price: 100,
-        availability: 5,
-        image: "images/math.png",
-        alt: "Math lesson icon",
-        icon: "fa-calculator"
-    },
-    {
-        id: 1002,
-        subject: "English",
-        location: "Colindale",
-        price: 80,
-        availability: 5,
-        image: "images/english.png",
-        alt: "English lesson icon",
-        icon: "fa-book"
-    },
-    {
-        id: 1003,
-        subject: "Science",
-        location: "Brent Cross",
-        price: 90,
-        availability: 5,
-        image: "images/science.png",
-        alt: "Science lesson icon",
-        icon: "fa-flask"
-    },
-    {
-        id: 1004,
-        subject: "History",
-        location: "Golders Green",
-        price: 95,
-        availability: 5,
-        image: "images/history.png",
-        alt: "History lesson icon",
-        icon: "fa-university"
-    },
-    {
-        id: 1005,
-        subject: "Music",
-        location: "Hendon",
-        price: 110,
-        availability: 5,
-        image: "images/music.png",
-        alt: "Music lesson icon",
-        icon: "fa-music"
-    },
-    {
-        id: 1006,
-        subject: "Art",
-        location: "Camden",
-        price: 85,
-        availability: 5,
-        image: "images/art.png",
-        alt: "Art lesson icon",
-        icon: "fa-paint-brush"
-    },
-    {
-        id: 1007,
-        subject: "Computer Science",
-        location: "Hendon",
-        price: 120,
-        availability: 5,
-        image: "images/coding.png",
-        alt: "Computer Science lesson icon",
-        icon: "fa-laptop"
-    },
-    {
-        id: 1008,
-        subject: "French",
-        location: "Finchley",
-        price: 75,
-        availability: 5,
-        image: "images/french.png",
-        alt: "French lesson icon",
-        icon: "fa-globe"
-    },
-    {
-        id: 1009,
-        subject: "Drama",
-        location: "Barnet",
-        price: 70,
-        availability: 5,
-        image: "images/drama.png",
-        alt: "Drama lesson icon",
-        icon: "fa-film"
-    },
-    {
-        id: 1010,
-        subject: "Sports",
-        location: "Wembley",
-        price: 65,
-        availability: 5,
-        image: "images/sports.png",
-        alt: "Sports lesson icon",
-        icon: "fa-futbol-o"
-    }
-];
-
-// GET route /lessons returning all lessons as JSON
-app.get("/lessons", function(request, response) {
-    response.json(lessonsArray);
+// GET route /lessons returning all lessons from the MongoDB "lessons" collection
+app.get("/lessons", async function(request, response) {
+    let collection = await db.collection("lessons");
+    let results = await collection.find({}).toArray();
+    response.send(results);
 });
 
-// POST route /orders receiving a new order and logging its summary
-app.post("/orders", function(request, response) {
+// POST route /orders saving a new order to the MongoDB "orders" collection
+app.post("/orders", async function(request, response) {
     var body = request.body;
-    console.log("Order received:"
-        + "\nName: " + body.name
-        + "\nPhone: " + body.phone
-        + "\nLesson IDs: " + JSON.stringify(body.lessonIDs)
-        + "\nSpaces: " + body.spaces);
-    response.json({ message: "Order received!" });
+    let collection = await db.collection("orders");
+    let result = await collection.insertOne(body);
+    response.send(result);
 });
 
 // Final middleware returning 404 error for any unrecognised request
