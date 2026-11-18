@@ -62,6 +62,41 @@ app.get("/teachers", async function(request, response) {
     response.send(results);
 });
 
+// [Challenge 3] GET route /enrolment/:lessonid returning the total number of slots purchased for that lesson
+app.get("/enrolment/:lessonid", async function(request, response) {
+    let lessonIdParam = request.params.lessonid;
+    let targetNumericId = parseInt(lessonIdParam, 10);
+
+    // If a MongoDB 24-character ObjectId was passed, also resolve its numeric lesson id
+    if (ObjectId.isValid(lessonIdParam) && String(targetNumericId) !== lessonIdParam) {
+        let lessonsCollection = await db.collection("lessons");
+        let foundLesson = await lessonsCollection.findOne({ _id: new ObjectId(lessonIdParam) });
+        if (foundLesson && foundLesson.id) {
+            targetNumericId = foundLesson.id;
+        }
+    }
+
+    let ordersCollection = await db.collection("orders");
+    let allOrders = await ordersCollection.find({}).toArray();
+
+    let enrolmentCount = 0;
+    for (let i = 0; i < allOrders.length; i++) {
+        let order = allOrders[i];
+        if (Array.isArray(order.lessonIDs)) {
+            for (let j = 0; j < order.lessonIDs.length; j++) {
+                if (order.lessonIDs[j] === targetNumericId || String(order.lessonIDs[j]) === lessonIdParam) {
+                    enrolmentCount++;
+                }
+            }
+        }
+    }
+
+    response.json({
+        lessonId: lessonIdParam,
+        enrolment: enrolmentCount
+    });
+});
+
 // POST route /orders saving a new order to the MongoDB "orders" collection
 app.post("/orders", async function(request, response) {
     var body = request.body;
