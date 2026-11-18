@@ -48,11 +48,27 @@ app.post("/orders", async function(request, response) {
     response.send(result);
 });
 
+// PUT route /lessons/:_id updating any attribute of a lesson in the "lessons" collection
+app.put("/lessons/:_id", async function(request, response) {
+    var body = request.body;
+    let collection = await db.collection("lessons");
+    let tempid = request.params._id;
+
+    const query = { _id: new ObjectId(tempid) };
+    const updates = {
+        $set: request.body
+    };
+    let result = await collection.updateOne(query, updates);
+    response.send(result);
+    console.log(result);
+});
+
 // Final middleware returning 404 error for any unrecognised request
 app.use(function(request, response) {
     response.status(404).send("Page not found!");
 });
 
-app.listen(3000, function() {
-    console.log("App started on port 3000");
+const port = process.env.PORT || 3000;
+app.listen(port, function() {
+    console.log("App started on port " + port);
 });
