@@ -6,6 +6,7 @@ var path = require("path");
 var app = express();
 
 app.use(cors());
+app.use(express.json()); // Allows Express to parse incoming JSON request bodies
 
 // Logger middleware: logs every incoming request's HTTP method, URL, and timestamp
 app.use(function(request, response, next) {
@@ -128,6 +129,17 @@ let lessonsArray = [
 // GET route /lessons returning all lessons as JSON
 app.get("/lessons", function(request, response) {
     response.json(lessonsArray);
+});
+
+// POST route /orders receiving a new order and logging its summary
+app.post("/orders", function(request, response) {
+    var body = request.body;
+    console.log("Order received:"
+        + "\nName: " + body.name
+        + "\nPhone: " + body.phone
+        + "\nLesson IDs: " + JSON.stringify(body.lessonIDs)
+        + "\nSpaces: " + body.spaces);
+    response.json({ message: "Order received!" });
 });
 
 // Final middleware returning 404 error for any unrecognised request
