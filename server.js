@@ -40,6 +40,21 @@ app.get("/lessons", async function(request, response) {
     response.send(results);
 });
 
+// [Challenge 1] GET route /search returning lessons matching query across subject, location, price, or availability
+app.get("/search", async function(request, response) {
+    let searchText = (request.query.q || "").toLowerCase();
+    let collection = await db.collection("lessons");
+    let allLessons = await collection.find({}).toArray();
+
+    let results = allLessons.filter(function(lesson) {
+        return String(lesson.subject).toLowerCase().includes(searchText) ||
+               String(lesson.location).toLowerCase().includes(searchText) ||
+               String(lesson.price).toLowerCase().includes(searchText) ||
+               String(lesson.availability).toLowerCase().includes(searchText);
+    });
+    response.send(results);
+});
+
 // POST route /orders saving a new order to the MongoDB "orders" collection
 app.post("/orders", async function(request, response) {
     var body = request.body;
