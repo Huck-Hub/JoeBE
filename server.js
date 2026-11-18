@@ -6,6 +6,12 @@ var app = express();
 
 app.use(cors());
 
+// Logger middleware: logs every incoming request's HTTP method, URL, and timestamp
+app.use(function(request, response, next) {
+    console.log("Incoming " + request.method + " request to " + request.url + " [" + new Date().toISOString() + "]");
+    next();
+});
+
 let lessonsArray = [
     {
         id: 1001,
