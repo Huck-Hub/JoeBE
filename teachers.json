@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "firstName": "Mark",
+        "lastName": "Jones",
+        "lessonIDs": [1001, 1005, 1007]
+    },
+    {
+        "id": 2,
+        "firstName": "Chinnu",
+        "lastName": "George",
+        "lessonIDs": [1003, 1006, 1009]
+    },
+    {
+        "id": 3,
+        "firstName": "Zia",
+        "lastName": "Lallmahomed",
+        "lessonIDs": [1002, 1004, 1008, 1010]
+    }
+]

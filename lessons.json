@@ -7,7 +7,9 @@
         "availability": 5,
         "image": "images/math.png",
         "alt": "Math lesson icon",
-        "icon": "fa-calculator"
+        "icon": "fa-calculator",
+        "teacherFirstName": "Mark",
+        "teacherLastName": "Jones"
     },
     {
         "id": 1002,
@@ -17,7 +19,9 @@
         "availability": 5,
         "image": "images/english.png",
         "alt": "English lesson icon",
-        "icon": "fa-book"
+        "icon": "fa-book",
+        "teacherFirstName": "Zia",
+        "teacherLastName": "Lallmahomed"
     },
     {
         "id": 1003,
@@ -27,7 +31,9 @@
         "availability": 5,
         "image": "images/science.png",
         "alt": "Science lesson icon",
-        "icon": "fa-flask"
+        "icon": "fa-flask",
+        "teacherFirstName": "Chinnu",
+        "teacherLastName": "George"
     },
     {
         "id": 1004,
@@ -37,7 +43,9 @@
         "availability": 5,
         "image": "images/history.png",
         "alt": "History lesson icon",
-        "icon": "fa-university"
+        "icon": "fa-university",
+        "teacherFirstName": "Zia",
+        "teacherLastName": "Lallmahomed"
     },
     {
         "id": 1005,
@@ -47,7 +55,9 @@
         "availability": 5,
         "image": "images/music.png",
         "alt": "Music lesson icon",
-        "icon": "fa-music"
+        "icon": "fa-music",
+        "teacherFirstName": "Mark",
+        "teacherLastName": "Jones"
     },
     {
         "id": 1006,
@@ -57,7 +67,9 @@
         "availability": 5,
         "image": "images/art.png",
         "alt": "Art lesson icon",
-        "icon": "fa-paint-brush"
+        "icon": "fa-paint-brush",
+        "teacherFirstName": "Chinnu",
+        "teacherLastName": "George"
     },
     {
         "id": 1007,
@@ -67,7 +79,9 @@
         "availability": 5,
         "image": "images/coding.png",
         "alt": "Computer Science lesson icon",
-        "icon": "fa-laptop"
+        "icon": "fa-laptop",
+        "teacherFirstName": "Mark",
+        "teacherLastName": "Jones"
     },
     {
         "id": 1008,
@@ -77,7 +91,9 @@
         "availability": 5,
         "image": "images/french.png",
         "alt": "French lesson icon",
-        "icon": "fa-globe"
+        "icon": "fa-globe",
+        "teacherFirstName": "Zia",
+        "teacherLastName": "Lallmahomed"
     },
     {
         "id": 1009,
@@ -87,7 +103,9 @@
         "availability": 5,
         "image": "images/drama.png",
         "alt": "Drama lesson icon",
-        "icon": "fa-film"
+        "icon": "fa-film",
+        "teacherFirstName": "Chinnu",
+        "teacherLastName": "George"
     },
     {
         "id": 1010,
@@ -97,6 +115,8 @@
         "availability": 5,
         "image": "images/sports.png",
         "alt": "Sports lesson icon",
-        "icon": "fa-futbol-o"
+        "icon": "fa-futbol-o",
+        "teacherFirstName": "Zia",
+        "teacherLastName": "Lallmahomed"
     }
 ]

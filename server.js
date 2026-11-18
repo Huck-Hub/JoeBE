@@ -55,6 +55,13 @@ app.get("/search", async function(request, response) {
     response.send(results);
 });
 
+// [Challenge 2] GET route /teachers returning all teachers and the lessons they teach from the "teachers" collection
+app.get("/teachers", async function(request, response) {
+    let collection = await db.collection("teachers");
+    let results = await collection.find({}).toArray();
+    response.send(results);
+});
+
 // POST route /orders saving a new order to the MongoDB "orders" collection
 app.post("/orders", async function(request, response) {
     var body = request.body;
