@@ -1,5 +1,6 @@
 var express = require("express"); // Requires the Express module
 var cors = require("cors");
+var path = require("path");
 
 // Calls the express function to start a new Express application
 var app = express();
@@ -10,6 +11,15 @@ app.use(cors());
 app.use(function(request, response, next) {
     console.log("Incoming " + request.method + " request to " + request.url + " [" + new Date().toISOString() + "]");
     next();
+});
+
+// Static file middleware: serves lesson images from the staticFiles directory
+var publicPath = path.resolve(__dirname, "staticFiles");
+app.use("/images", express.static(publicPath));
+
+// If an image file does not exist in staticFiles, return a 404 error message
+app.use("/images", function(request, response) {
+    response.status(404).send("Image not found!");
 });
 
 let lessonsArray = [
